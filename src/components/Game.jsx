@@ -32,11 +32,15 @@ const Game = () => {
   const changeLevel = (event) => {
     setCurrentLevel(premadeLevels[selectedLevel.current.value]);
     setGameStarted(false);
+    setGameComplete(false);
+    setGameOver(false);
   };
 
   const startGame = () => {
     console.log("caem into startGame");
     setGameStarted(true);
+    setGameComplete(false);
+    setGameOver(false);
   };
 
   const clickedBomb = () => {
@@ -49,6 +53,10 @@ const Game = () => {
     setGameComplete(false);
   };
 
+  const completed = () => {
+    setGameComplete(true);
+  };
+
   return (
     <section className="game">
       <p>{gameStarted ? "Game has started" : "Game not started"}</p>
@@ -58,13 +66,17 @@ const Game = () => {
         <option value="expert">Expert</option>
       </select>
       <button onClick={reset}>Reset</button>
+      gameComplete: {gameComplete.toString()}
+      {gameComplete ? <h3>CONGRATULATIONS</h3> : null}
       {gameOver ? <h3>GAME OVER!</h3> : null}
-
       <Board
         currentLevel={currentLevel}
         gameStarted={gameStarted}
         startGame={startGame}
         clickedBomb={clickedBomb}
+        gameOver={gameOver}
+        gameComplete={gameComplete}
+        completedGame={completed}
         // resetGame={reset}
       />
     </section>

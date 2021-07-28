@@ -5,12 +5,16 @@ const Cell = ({ cell, clicked, rightClicked }) => {
     clicked(cell);
   };
 
-  const rightClickCell = () => {
-    // rightClicked(cell);
+  const rightClickCell = (event) => {
+    rightClicked(event, cell);
   };
 
   const displayCell = () => {
-    if (cell.isRevealed) {
+    if (cell.exploded) {
+      return "❌";
+    } else if (cell.isIncorrect) {
+      return "⚠️";
+    } else if (cell.isRevealed) {
       if (cell.isMine) {
         return "💣";
       }
@@ -23,8 +27,7 @@ const Cell = ({ cell, clicked, rightClicked }) => {
 
   return (
     <div className="cell" onClick={clickedCell} onContextMenu={rightClickCell}>
-      {/* {cell.isMine ? "💣" : cell.isRevealed ? cell.value : ""} */}
-      {cell.isRevealed ? cell.value : ""}
+      {displayCell()}
     </div>
   );
 };

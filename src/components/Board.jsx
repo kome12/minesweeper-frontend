@@ -2,8 +2,17 @@ import { useEffect, useState } from "react";
 import "./board.scss";
 import Cell from "./Cell";
 
-const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
+const Board = ({
+  currentLevel,
+  gameStarted,
+  startGame,
+  clickedBomb,
+  gameOver,
+  gameComplete,
+  completedGame,
+}) => {
   const [board, setBoard] = useState([]);
+  const [mineLocations, setMineLocations] = useState([]);
 
   useEffect(() => {
     console.log("came into useEffect");
@@ -19,6 +28,8 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
             isRevealed: false,
             isFlagged: false,
             isUnknown: false,
+            isIncorrect: false,
+            exploded: false,
             value: 0,
           });
         }
@@ -27,6 +38,17 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
       setBoard(newBoard);
     }
   }, [currentLevel, gameStarted]);
+
+  useEffect(() => {
+    if (gameStarted) {
+      const allNonMinesRevealed = board.every((row) =>
+        row.every((cell) => cell.isMine || cell.isRevealed)
+      );
+      if (allNonMinesRevealed) {
+        completedGame();
+      }
+    }
+  }, [board]);
 
   const randomizeMinesInBoard = () => {
     const randomRow = Math.floor(Math.random() * currentLevel.height);
@@ -40,6 +62,7 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
   const initializeBoardWithMines = (initialCell) => {
     let numMines = 0;
     console.log(`initialCell is ${initialCell.row}, ${initialCell.column}`);
+    const mines = [];
     while (numMines < currentLevel.numMines) {
       const randomCoordinate = randomizeMinesInBoard();
       if (
@@ -55,9 +78,14 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
             randomCoordinate.column
           }`
         );
+        mines.push({
+          row: randomCoordinate.row,
+          column: randomCoordinate.column,
+        });
         numMines++;
       }
     }
+    setMineLocations(mines);
   };
 
   const getSurroundingCells = (cell, currentBoard = board) => {
@@ -119,7 +147,11 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
       if (currentCell.value === 0) {
         const surroundingCells = getSurroundingCells(currentCell);
         surroundingCells.forEach((surroundingCell) => {
-          if (!surroundingCell.isMine && !surroundingCell.isRevealed) {
+          if (
+            !surroundingCell.isMine &&
+            !surroundingCell.isRevealed &&
+            !surroundingCell.isFlagged
+          ) {
             queue.push(surroundingCell);
           }
         });
@@ -152,29 +184,57 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
     initializeBoardWithMines(initialCell);
     populateNeighboringMines();
     getCellValue(initialCell);
-    console.log("board after initializing:", board);
   };
 
   const updateCellToClicked = (cell) => {
     if (!board[cell.row][cell.column].isRevealed) {
       board[cell.row][cell.column].isRevealed = true;
       if (board[cell.row][cell.column].isMine) {
+        board[cell.row][cell.column].exploded = true;
+        revealMines();
         clickedBomb();
       } else {
-        console.log("came into updateCellToClicked else");
         getCellValue(cell);
       }
     }
   };
 
-  const cellClicked = (cell) => {
-    if (!gameStarted) {
-      startGame();
-      initializeBoard(cell);
-      updateCellToClicked(cell);
-    } else {
-      updateCellToClicked(cell);
+  const handleClick = (cell) => {
+    if (!gameOver) {
+      if (!gameStarted) {
+        startGame();
+        initializeBoard(cell);
+        updateCellToClicked(cell);
+      } else {
+        updateCellToClicked(cell);
+      }
     }
+  };
+
+  const handleRightClick = (event, cell) => {
+    event.preventDefault();
+    if (!gameOver) {
+      board[cell.row][cell.column].isFlagged =
+        !board[cell.row][cell.column].isFlagged;
+      setBoard(JSON.parse(JSON.stringify(board)));
+    }
+  };
+
+  const revealMines = () => {
+    for (const mineLocation of mineLocations) {
+      board[mineLocation.row][mineLocation.column].isRevealed = true;
+    }
+
+    const updatedBoard = board.map((row) => {
+      return row.map((cell) => {
+        if (cell.isFlagged && !cell.isMine) {
+          cell.isIncorrect = true;
+        }
+        return cell;
+      });
+    });
+
+    setBoard(updatedBoard);
   };
 
   const displayBoard = () => {
@@ -182,11 +242,14 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
       return (
         <div key={rowIndex} className="board-row">
           {row.map((column, columnIndex) => {
-            // const cell = board[rowIndex][columnIndex];
             const cell = column;
             return (
               <div key={rowIndex + "_" + columnIndex}>
-                <Cell cell={cell} clicked={cellClicked} />
+                <Cell
+                  cell={cell}
+                  clicked={handleClick}
+                  rightClicked={handleRightClick}
+                />
               </div>
             );
           })}
@@ -197,8 +260,6 @@ const Board = ({ currentLevel, gameStarted, startGame, clickedBomb }) => {
 
   return (
     <div>
-      {/* <button onClick={reset}>Restart Game</button> */}
-
       <section className="board">{displayBoard()}</section>
     </div>
   );

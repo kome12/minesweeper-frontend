@@ -200,7 +200,7 @@ const Board = ({
   };
 
   const handleClick = (cell) => {
-    if (!gameOver) {
+    if (!gameOver && !cell.isRevealed && !cell.isFlagged) {
       if (!gameStarted) {
         startGame();
         initializeBoard(cell);
@@ -213,7 +213,7 @@ const Board = ({
 
   const handleRightClick = (event, cell) => {
     event.preventDefault();
-    if (!gameOver) {
+    if (!gameOver && !cell.isRevealed) {
       board[cell.row][cell.column].isFlagged =
         !board[cell.row][cell.column].isFlagged;
       setBoard(JSON.parse(JSON.stringify(board)));

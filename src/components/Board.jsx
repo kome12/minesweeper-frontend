@@ -48,6 +48,7 @@ const Board = ({
         completedGame();
       }
     }
+    // eslint-disable-next-line
   }, [board]);
 
   const randomizeMinesInBoard = () => {

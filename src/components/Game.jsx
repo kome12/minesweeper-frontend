@@ -85,6 +85,7 @@ const Game = () => {
     if (runningTime > 999) {
       setTimer(clearInterval(timer));
     }
+    // eslint-disable-next-line
   }, [runningTime]);
 
   const changeLevel = (event) => {

@@ -2,5 +2,48 @@
   height: 30px;
   width: 30px;
   background-color: lightgray;
-  border: 1px solid white;
+  border: 1px solid rgb(163, 162, 162);
+  font-weight: bold;
+  font-size: 20px;
+
+  &.reveal {
+    background-color: rgb(184, 184, 184);
+    border: 1px solid gray;
+  }
+
+  &.exploded {
+    background-color: red;
+  }
+
+  &.one-mine {
+    color: rgb(2, 2, 210);
+  }
+
+  &.two-mines {
+    color: green;
+  }
+
+  &.three-mine {
+    color: red;
+  }
+
+  &.four-mines {
+    color: rgb(154, 18, 154);
+  }
+
+  &.five-mine {
+    color: maroon;
+  }
+
+  &.six-mines {
+    color: rgb(37, 155, 143);
+  }
+
+  &.seven-mine {
+    color: black;
+  }
+
+  &.eight-mines {
+    color: rgb(88, 87, 87);
+  }
 }

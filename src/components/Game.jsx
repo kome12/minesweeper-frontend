@@ -63,9 +63,10 @@ const Game = () => {
     },
   };
 
-  const [currentLevel, setCurrentLevel] = useState(premadeLevels.beginner);
-  // const selectedLevel = useRef("expert");
-  const selectedLevel = useRef("beginner");
+  const [currentLevel, setCurrentLevel] = useState(premadeLevels.expert);
+  const [level, setLevel] = useState("expert");
+  const selectedLevel = useRef();
+  // const selectedLevel = useRef("beginner");
 
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
@@ -89,6 +90,7 @@ const Game = () => {
   }, [runningTime]);
 
   const changeLevel = (event) => {
+    // setLevel(selectedLevel.current.value);
     setCurrentLevel(premadeLevels[selectedLevel.current.value]);
     setGameStarted(false);
     setGameComplete(false);

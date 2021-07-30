@@ -143,7 +143,7 @@ const Board = ({
   const getCellValue = (cell) => {
     const queue = [cell];
     while (queue.length > 0) {
-      const currentCell = queue.pop();
+      const currentCell = queue.shift();
       board[currentCell.row][currentCell.column].isRevealed = true;
       if (currentCell.value === 0) {
         const surroundingCells = getSurroundingCells(currentCell);

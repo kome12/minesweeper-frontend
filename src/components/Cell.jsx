@@ -10,9 +10,9 @@ const Cell = ({ cell, clicked, rightClicked }) => {
   };
 
   const displayCell = () => {
-    if (cell.isMine) {
-      return "💣";
-    }
+    // if (cell.isMine) {
+    //   return "💣";
+    // }
     if (cell.exploded) {
       return "💣";
     } else if (cell.isIncorrect) {

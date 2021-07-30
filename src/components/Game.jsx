@@ -64,7 +64,7 @@ const Game = () => {
   };
 
   const [currentLevel, setCurrentLevel] = useState(premadeLevels.expert);
-  const [level, setLevel] = useState("expert");
+  // const [level, setLevel] = useState("expert");
   const selectedLevel = useRef();
   // const selectedLevel = useRef("beginner");
 

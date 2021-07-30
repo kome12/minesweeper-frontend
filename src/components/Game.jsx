@@ -92,9 +92,10 @@ const Game = () => {
   const changeLevel = (event) => {
     // setLevel(selectedLevel.current.value);
     setCurrentLevel(premadeLevels[selectedLevel.current.value]);
-    setGameStarted(false);
-    setGameComplete(false);
-    setGameOver(false);
+    // setGameStarted(false);
+    // setGameComplete(false);
+    // setGameOver(false);
+    reset();
   };
 
   const startGame = () => {

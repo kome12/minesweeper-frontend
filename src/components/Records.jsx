@@ -39,15 +39,15 @@ const Records = () => {
 
   return (
     <section className="previous-results">
-      <div>
+      <div className="results-category">
         <h4>Beginner</h4>
         {createPreviousResultsList("beginner")}
       </div>
-      <div>
+      <div className="results-category">
         <h4>Intermediate</h4>
         {createPreviousResultsList("intermediate")}
       </div>
-      <div>
+      <div className="results-category">
         <h4>Expert</h4>
         {createPreviousResultsList("expert")}
       </div>

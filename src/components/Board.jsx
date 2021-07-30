@@ -10,6 +10,7 @@ const Board = ({
   gameOver,
   gameComplete,
   completedGame,
+  updateFlagCount,
 }) => {
   const [board, setBoard] = useState([]);
   const [mineLocations, setMineLocations] = useState([]);
@@ -41,12 +42,22 @@ const Board = ({
 
   useEffect(() => {
     if (gameStarted) {
+      const flagCount = board.reduce((rowSum, row) => {
+        rowSum += row.reduce((columnSum, cell) => {
+          columnSum += cell.isFlagged ? 1 : 0;
+          return columnSum;
+        }, 0);
+        return rowSum;
+      }, 0);
+
       const allNonMinesRevealed = board.every((row) =>
         row.every((cell) => cell.isMine || cell.isRevealed)
       );
       if (allNonMinesRevealed) {
         completedGame();
       }
+
+      updateFlagCount(flagCount);
     }
     // eslint-disable-next-line
   }, [board]);

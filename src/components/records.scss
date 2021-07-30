@@ -1,9 +1,15 @@
 .previous-results {
+  margin: 16px 64px;
   display: flex;
-  justify-content: space-around;
+  font-size: 1rem;
+  .results-category {
+    flex: 33%;
+    padding: 8px;
+  }
 }
 
 .record-entry {
   display: flex;
-  flex: 33%;
+  justify-content: space-between;
+  padding: 0px 8px;
 }

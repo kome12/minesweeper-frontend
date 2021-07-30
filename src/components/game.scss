@@ -1,3 +1,31 @@
 .game {
-  margin: auto;
+  margin: 16px 64px;
+  display: flex;
+  flex-direction: column;
+
+  .form-select {
+    width: auto;
+  }
+
+  .game-controls {
+    display: flex;
+  }
+}
+
+.form-separator {
+  display: flex;
+  flex-direction: column;
+  .form-label {
+    padding-bottom: 4px;
+  }
+
+  .form-input {
+    padding: 8px;
+  }
+
+  .name-warning {
+    font-style: italic;
+    font-size: 1rem;
+    margin-top: 4px;
+  }
 }

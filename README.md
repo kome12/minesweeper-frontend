@@ -18,12 +18,14 @@ REACT_APP_API_URL
 
 ## Tech Stack
 
-- [Node.js](https://nodejs.org/en/) / [Express](https://expressjs.com/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Prisma](https://www.prisma.io/)
+- [React](https://reactjs.org/)
+- [Bootstrap](https://react-bootstrap.github.io/)
+- [Heroku](https://www.heroku.com/home)
 
 ## Future Plans
 
-- Add Users model
-- Get games by user
-- Link Games to Users
+- Make mobile friendly
+- Create custom board
+- Keep track of stats
+- Create login so users can track their own record and stats
+- Different board shape

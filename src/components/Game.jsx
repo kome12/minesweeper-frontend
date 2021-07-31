@@ -87,6 +87,13 @@ const Game = () => {
   const [finalTime, setFinalTime] = useState();
   const [minesLeft, setMinesLeft] = useState(currentLevel.numMines);
 
+  const [games, setGames] = useState({
+    beginner: [],
+    intermediate: [],
+    expert: [],
+  });
+  const [refetchGames, setRefetchGames] = useState(true);
+
   useEffect(() => {
     if (gameStarted && !gameOver) {
     } else if (gameOver) {
@@ -99,6 +106,20 @@ const Game = () => {
     }
     // eslint-disable-next-line
   }, [runningTime]);
+
+  useEffect(() => {
+    const getGames = async () => {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/games`);
+      if (res.data && res.data.data) {
+        setGames(res.data.data);
+      }
+    };
+
+    if (refetchGames) {
+      getGames();
+      setRefetchGames(false);
+    }
+  }, [refetchGames]);
 
   const changeLevel = (event) => {
     // setLevel(selectedLevel.current.value);
@@ -157,6 +178,7 @@ const Game = () => {
     };
     await axios.post(`${process.env.REACT_APP_API_URL}/games`, game);
     closeModal();
+    setRefetchGames(true);
   };
 
   const updateMinesLeft = (currentFlagCount) => {
@@ -186,11 +208,6 @@ const Game = () => {
           <div>Timer: {runningTime}</div>
           <div>Mines Left: {minesLeft}</div>
         </div>
-        {/* <select onChange={changeLevel} ref={selectedLevel}>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="expert">Expert</option>
-      </select> */}
         <Board
           currentLevel={currentLevel}
           gameStarted={gameStarted}
@@ -202,7 +219,7 @@ const Game = () => {
           updateFlagCount={updateMinesLeft}
         />
       </section>
-      <Records />
+      <Records games={games} />
       <WinnerInfo
         showModal={showModal}
         handleClose={closeModal}

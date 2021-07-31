@@ -1,26 +1,6 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import "./records.scss";
 
-const Records = () => {
-  const [games, setGames] = useState({
-    beginner: [],
-    intermediate: [],
-    expert: [],
-  });
-
-  useEffect(() => {
-    const getGames = async () => {
-      console.log("process.env.API_URL:", process.env.REACT_APP_API_URL);
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/games`);
-      if (res.data && res.data.data) {
-        setGames(res.data.data);
-      }
-    };
-
-    getGames();
-  }, []);
-
+const Records = ({ games }) => {
   const createPreviousResultsList = (level) => {
     const gamesbyLevel = games[level];
     if (gamesbyLevel) {

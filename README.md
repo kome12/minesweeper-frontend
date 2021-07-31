@@ -25,6 +25,7 @@ REACT_APP_API_URL
 ## Future Plans
 
 - Make mobile friendly
+- Dark mode?
 - Create custom board
 - Keep track of stats
 - Create login so users can track their own record and stats

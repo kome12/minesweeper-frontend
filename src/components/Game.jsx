@@ -199,7 +199,6 @@ const Game = () => {
             <option value="intermediate">Intermediate</option>
             <option value="expert">Expert</option>
           </Form.Select>
-          {/* <button onClick={reset}>Reset</button> */}
           <Button variant="primary" type="button" onClick={reset}>
             Reset
           </Button>

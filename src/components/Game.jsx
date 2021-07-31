@@ -74,9 +74,7 @@ const Game = () => {
   };
 
   const [currentLevel, setCurrentLevel] = useState(premadeLevels.expert);
-  // const [level, setLevel] = useState("expert");
   const selectedLevel = useRef("expert");
-  // const selectedLevel = useRef("beginner");
 
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
@@ -122,12 +120,7 @@ const Game = () => {
   }, [refetchGames]);
 
   const changeLevel = (event) => {
-    // setLevel(selectedLevel.current.value);
     setCurrentLevel(premadeLevels[selectedLevel.current.value]);
-    console.log("currentLevel:", currentLevel);
-    // setGameStarted(false);
-    // setGameComplete(false);
-    // setGameOver(false);
     reset();
   };
 

@@ -29,26 +29,7 @@ const Cell = ({ cell, clicked, rightClicked }) => {
   };
 
   const addClassNameBasedOnValue = (cell) => {
-    switch (cell.value) {
-      case 1:
-        return "one-mine";
-      case 2:
-        return "two-mines";
-      case 3:
-        return "three-mine";
-      case 4:
-        return "four-mines";
-      case 5:
-        return "five-mine";
-      case 6:
-        return "six-mines";
-      case 7:
-        return "seven-mine";
-      case 8:
-        return "eight-mines";
-      default:
-        return "";
-    }
+    return cell.value ? `mine${cell.value > 1 ? "s" : ""}-${cell.value}` : "";
   };
 
   return (

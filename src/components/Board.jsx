@@ -72,7 +72,7 @@ const Board = ({
 
   const initializeBoardWithMines = (initialCell) => {
     let numMines = 0;
-    console.log(`initialCell is ${initialCell.row}, ${initialCell.column}`);
+    // console.log(`initialCell is ${initialCell.row}, ${initialCell.column}`);
     const mines = [];
     while (numMines < currentLevel.numMines) {
       const randomCoordinate = randomizeMinesInBoard();
@@ -84,11 +84,11 @@ const Board = ({
         !board[randomCoordinate.row][randomCoordinate.column].isMine
       ) {
         board[randomCoordinate.row][randomCoordinate.column].isMine = true;
-        console.log(
-          `mine #${numMines + 1} is on ${randomCoordinate.row}, ${
-            randomCoordinate.column
-          }`
-        );
+        // console.log(
+        //   `mine #${numMines + 1} is on ${randomCoordinate.row}, ${
+        //     randomCoordinate.column
+        //   }`
+        // );
         mines.push({
           row: randomCoordinate.row,
           column: randomCoordinate.column,

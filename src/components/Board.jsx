@@ -16,7 +16,6 @@ const Board = ({
   const [mineLocations, setMineLocations] = useState([]);
 
   useEffect(() => {
-    console.log("came into useEffect");
     if (!gameStarted) {
       const newBoard = [];
       for (let r = 0; r < currentLevel.height; r++) {
